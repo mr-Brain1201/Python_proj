@@ -1,5 +1,4 @@
 from sys import argv
-
 while True:
     try:
         script_name, first_param, second_param, third_param = argv
