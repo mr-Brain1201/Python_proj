@@ -36,7 +36,7 @@ c_4 = c_1 + c_2 + c_3
 c_5 = c_1 - c_2 - c_3
 c_6 = c_1 * c_2 // c_3
 c_7 = c_3 * c_1 // c_2
-c_4.make_order(14)
+c_4.make_order(13)
 c_5.make_order(8)
 c_6.make_order(2)
 c_7.make_order(5)
