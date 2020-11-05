@@ -1,0 +1,284 @@
+Index: ../lesson_3/ex_6.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>def int_func(str_1):\r\n    while True:\r\n        try:\r\n            ind = -1\r\n            for el in str_1:\r\n                ind += 1\r\n                if 122 >= str_1[ind].ord >= 97 or str_1[ind].ord == 32:\r\n                    'ok'\r\n                else:\r\n                    print('Используйте только маленькие латинские буквы!')\r\n                    break\r\n\r\n        except ValueError as err:\r\n            print(err)\r\n            a = str_1.title\r\n            return a\r\n\r\n\r\nstr_1 = input('введите слово: ')\r\nprint(int_func(str_1))\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../lesson_3/ex_6.py	(revision fe15169ea3c27ca834b5e3fd682f7339abff9a35)
++++ ../lesson_3/ex_6.py	(date 1602867537306)
+@@ -1,19 +1,34 @@
+ def int_func(str_1):
++    global a
+     while True:
+         try:
+             ind = -1
+-            for el in str_1:
++            my_list = list(str_1)
++            my_list_2 = []
++
++            for el in my_list:
+                 ind += 1
+-                if 122 >= str_1[ind].ord >= 97 or str_1[ind].ord == 32:
+-                    'ok'
+-                else:
+-                    print('Используйте только маленькие латинские буквы!')
+-                    break
++                my_list_2.append(my_list[ind])
++                if 122 <= ord((my_list[ind])) <= 97 or ord((my_list[ind])) != 32:
++                    input('Используйте только маленькие латинские буквы!: ')
++                    my_list_2 = 0
++
++            if my_list_2 != 0:
++                print(ord((my_list[ind])))
++                str_2 = ''.join(my_list_2)
++                a = str_2
++            else:
++                str_1 = input('Используйте только маленькие латинские буквы!: ')
++                a = 0
+ 
+         except ValueError as err:
+             print(err)
+-            a = str_1.title
+-            return a
++        except NameError as err:
++            print(err)
++        except AttributeError as err:
++            print(err)
++            break
++    return a.title()
+ 
+ 
+ str_1 = input('введите слово: ')
+Index: ../lesson_1/.idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../lesson_1/.idea/vcs.xml	(date 1602782876227)
++++ ../lesson_1/.idea/vcs.xml	(date 1602782876227)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: ex_1.py
+===================================================================
+--- ex_1.py	(date 1603028629275)
++++ ex_1.py	(date 1603028629275)
+@@ -0,0 +1,15 @@
++from sys import argv
++
++while True:
++    try:
++        script_name, first_param, second_param, third_param = argv
++        for i in argv[1:-1]:
++            i.isdigit()
++            if i.isdigit() is False:
++                print('Введите числовые значения!')
++                break
++        print(f'Сумма к выплате: {float(first_param) * float(second_param) + float(third_param)}')
++        break
++    except ValueError as err:
++        print(err)
++        break
+Index: ../lesson_2/main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># This is a sample Python script.\r\n\r\n# Press Shift+F10 to execute it or replace it with your code.\r\n# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.\r\n\r\n\r\ndef print_hi(name):\r\n    # Use a breakpoint in the code line below to debug your script.\r\n    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.\r\n\r\n\r\n# Press the green button in the gutter to run the script.\r\nif __name__ == '__main__':\r\n    print_hi('PyCharm')\r\n\r\n# See PyCharm help at https://www.jetbrains.com/help/pycharm/\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../lesson_2/main.py	(revision fe15169ea3c27ca834b5e3fd682f7339abff9a35)
++++ ../lesson_2/main.py	(date 1602788356318)
+@@ -1,16 +1,55 @@
+-# This is a sample Python script.
++result = 0
++
++# Функции
++def is_float(string):
++    try:
++        float(string)
++        return True
++    except ValueError:
++        return False
++
++
++def string_filter(string: str) -> tuple:
++    array = string.strip().split()
++    allowed = []
++    denied = []
++
++    for value in array:
++        if value == 'q':
++            return allowed, denied, True
++        if value.isdecimal():
++            allowed.append(int(value))
++        elif is_float(value):
++            allowed.append(float(value))
++        else:
++            denied.append(value)
+ 
+-# Press Shift+F10 to execute it or replace it with your code.
+-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
++    return allowed, denied, False
+ 
+ 
+-def print_hi(name):
+-    # Use a breakpoint in the code line below to debug your script.
+-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
++# Программа
++print('Для остановки программы введите: "q" и нажмите Enter')
+ 
++while True:
++    user_input = input('Введите числа, разделенные пробелами: ')
+ 
+-# Press the green button in the gutter to run the script.
+-if __name__ == '__main__':
+-    print_hi('PyCharm')
++    numbers, strings, get_out = string_filter(user_input)
+ 
+-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
++    if len(numbers) == 0:
++        continue
++    print('\n=== Сумма чисел ===')
++    if result != 0:
++        print(result, end=' + ')
++    print(*numbers, sep=' + ', end=' = ')
++    result += sum(numbers)
++    print(result)
++
++    if len(strings) > 0:
++        print('=== Некорректные значения ===')
++        print(*strings, sep=', ', end='\n\n')
++
++    if get_out:
++        print('Введен символ "q". Программа завершена!')
++        break
++    else:
++        print('Продолжаем считать...')
+Index: .idea/.gitignore
+===================================================================
+--- .idea/.gitignore	(date 1602931452645)
++++ .idea/.gitignore	(date 1602931452645)
+@@ -0,0 +1,3 @@
++# Default ignored files
++/shelf/
++/workspace.xml
+Index: .idea/vcs.xml
+===================================================================
+--- .idea/vcs.xml	(date 1602931424950)
++++ .idea/vcs.xml	(date 1602931424950)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: ../lesson_2/ex_4.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>a = (input('Enter a few words: '))\r\nmy_list = (a.split())\r\nprint(my_list)\r\nfor ind, el in enumerate(my_list, 1):\r\n    if len(el) > 10:\r\n        print(ind, el[:9])\r\n    else:\r\n        print(ind, el)\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../lesson_2/ex_4.py	(revision fe15169ea3c27ca834b5e3fd682f7339abff9a35)
++++ ../lesson_2/ex_4.py	(date 1602607361168)
+@@ -3,6 +3,6 @@
+ print(my_list)
+ for ind, el in enumerate(my_list, 1):
+     if len(el) > 10:
+-        print(ind, el[:9])
++        print(ind, el[:10])
+     else:
+         print(ind, el)
+Index: .idea/inspectionProfiles/profiles_settings.xml
+===================================================================
+--- .idea/inspectionProfiles/profiles_settings.xml	(date 1602931424922)
++++ .idea/inspectionProfiles/profiles_settings.xml	(date 1602931424922)
+@@ -0,0 +1,6 @@
++<component name="InspectionProjectProfileManager">
++  <settings>
++    <option name="USE_PROJECT_PROFILE" value="false" />
++    <version value="1.0" />
++  </settings>
++</component>
+\ No newline at end of file
+Index: ../lesson_2/ex_5.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>my_list = [4, 6, 3, 7, 4, 5, 9, 1]\r\nmy_list.sort()\r\nmy_list.reverse()\r\nprint(my_list)\r\na = -1\r\nwhile a <= 0:\r\n    a = int(input('Введите элемент рейтинга не меньше нуля: '))\r\nb = 0\r\nif a == my_list[-1]:\r\n    my_list.append(a)\r\n    print(f'Позиция элемента: последний {my_list}')\r\nelse:\r\n    while a <= my_list[b]:\r\n        b = b + 1\r\n    else:\r\n        my_list.insert(b, a)\r\n        print(f'Позиция элемента: {b + 1} {my_list}')\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../lesson_2/ex_5.py	(revision fe15169ea3c27ca834b5e3fd682f7339abff9a35)
++++ ../lesson_2/ex_5.py	(date 1602615421828)
+@@ -15,3 +15,4 @@
+     else:
+         my_list.insert(b, a)
+         print(f'Позиция элемента: {b + 1} {my_list}')
++
+Index: ../lesson_2/ex_6.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>a = 1\r\n# a - номер товара/кортежа\r\n\r\nlist_item = []\r\n# name = input('Enter key (name): ')\r\n# price = input('Enter key (price): ')\r\n# quantity = input('Enter key (quantity): ')\r\n# unit = input('Enter key (unit): ')\r\nb = ()\r\nc = ()\r\nd = ()\r\ne = ()\r\nwhile a >= 1:\r\n    b = input('Enter name: ')\r\n    c = input('Enter price: ')\r\n    d = input('Enter quantity: ')\r\n    e = input('Enter unit: ')\r\n    list_item.append((a, {'name': b, 'price': c, 'quantity': d, 'unit': e}))\r\n    a = a + 1\r\n    question = input('Want to add another product? Y/N: ')\r\n    if question != 'n':\r\n        # or 'N' or 'no' or 'нет' or 'НЕТ' or 'NO':\r\n        while a >= 1:\r\n            b = input('Enter name: ')\r\n            c = input('Enter price: ')\r\n            d = input('Enter quantity: ')\r\n            e = input('Enter unit: ')\r\n            list_item.append((a, {'name': b, 'price': c, 'quantity': d, 'unit': e}))\r\n            a = a + 1\r\n            question = input('Want to add another product? Y/N: ')\r\n            if question == 'n':\r\n                break\r\n    else:\r\n        break\r\nname_list = []\r\nprice_list = []\r\nquantity_list = []\r\nunit_list = []\r\nx = 0\r\nwhile x >= 0:\r\n    name_list.append(list_item[x][1].get('name'))\r\n#\r\n# for list_item[0][1] in list_item[0][1].get('name'):\r\n#    name_list.append(list_item[0][1].get('name'))\r\nprint(name_list)\r\n#
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../lesson_2/ex_6.py	(revision fe15169ea3c27ca834b5e3fd682f7339abff9a35)
++++ ../lesson_2/ex_6.py	(date 1602606282480)
+@@ -1,4 +1,4 @@
+-a = 1
++'''a = 1
+ # a - номер товара/кортежа
+ 
+ list_item = []
+@@ -43,4 +43,4 @@
+ # for list_item[0][1] in list_item[0][1].get('name'):
+ #    name_list.append(list_item[0][1].get('name'))
+ print(name_list)
+-#
+\ No newline at end of file
++'''
+Index: .idea/modules.xml
+===================================================================
+--- .idea/modules.xml	(date 1602931424878)
++++ .idea/modules.xml	(date 1602931424878)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/.idea/lesson_4.iml" filepath="$PROJECT_DIR$/.idea/lesson_4.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: main.py
+===================================================================
+--- main.py	(date 1602931424024)
++++ main.py	(date 1602931424024)
+@@ -0,0 +1,16 @@
++# This is a sample Python script.
++
++# Press Shift+F10 to execute it or replace it with your code.
++# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
++
++
++def print_hi(name):
++    # Use a breakpoint in the code line below to debug your script.
++    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
++
++
++# Press the green button in the gutter to run the script.
++if __name__ == '__main__':
++    print_hi('PyCharm')
++
++# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+diff --git ex_2.py ex_2.py
+new file mode 100644
